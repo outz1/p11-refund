@@ -327,3 +327,22 @@ aside ul {
   100% { transform: rotate(90deg);}
 }
 
+#download-excel {
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 0.87rem;
+  color: #ffffff;
+  background-color: #1f8459;
+  font-weight: 700;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: block;
+  margin: 2rem auto 0;
+  text-align: center;
+}
+
+#download-excel:hover {
+  background-color: #2cb178;
+}

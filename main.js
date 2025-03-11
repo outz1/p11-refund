@@ -157,3 +157,52 @@ function formClear() {
 
   expense.focus() // Coloca o foco no input de amount
 }
+
+// Criar botão para gerar planilha
+const downloadButton = document.createElement("button");
+downloadButton.textContent = "Baixar Planilha";
+downloadButton.id = "download-excel"; // Aplicando o ID para estilização via CSS
+downloadButton.onclick = generateExcel;
+
+document.querySelector("aside").appendChild(downloadButton);
+
+// Função para gerar a planilha
+function generateExcel() {
+  const expenses = Array.from(expenseList.children).map((item) => {
+    return {
+      Nome: item.querySelector("strong").textContent,
+      Categoria: item.querySelector(".expense-info span").textContent,
+      Valor: item.querySelector(".expense-amount").textContent.replace("R$", "").trim(),
+    };
+  });
+
+  if (expenses.length === 0) {
+    alert("Nenhuma despesa cadastrada!");
+    return;
+  }
+
+  // Organizar por categoria
+  const groupedExpenses = {};
+  expenses.forEach((expense) => {
+    if (!groupedExpenses[expense.Categoria]) {
+      groupedExpenses[expense.Categoria] = [];
+    }
+    groupedExpenses[expense.Categoria].push(expense);
+  });
+
+  // Criar estrutura para a planilha
+  let sheetData = [];
+  Object.keys(groupedExpenses).forEach((category) => {
+    sheetData.push([category]); // Nome da categoria como cabeçalho
+    sheetData = sheetData.concat(
+      groupedExpenses[category].map((exp) => [exp.Nome, exp.Valor])
+    );
+    sheetData.push([]); // Linha vazia entre categorias
+  });
+
+  // Criar planilha e salvar
+  const ws = XLSX.utils.aoa_to_sheet(sheetData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Despesas");
+  XLSX.writeFile(wb, "despesas.xlsx");
+}
