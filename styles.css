@@ -6,7 +6,7 @@
 
 :root {
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 ::-webkit-scrollbar {
@@ -22,6 +22,7 @@
 }
 
 body {
+  zoom: 1.22;
   width: 100%;
   height: 100vh;
 
@@ -127,6 +128,10 @@ select:focus {
 
 .inputs-row fieldset:last-child input {
   max-width: 154px;
+}
+
+.bold {
+  font-weight: 700;
 }
 
 form button {
